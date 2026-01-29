@@ -62,7 +62,7 @@ cp .env.example .env
 php artisan key:generate
 en el .env se llenan los datos con el gestor que tenga en mi ejemplo es
 
-DB_CONNECTION=efectivale
+DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=laravel
