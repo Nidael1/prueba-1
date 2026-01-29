@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registros</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="h3 mb-0">Registros</h1>
+      <a href="/index.html" class="btn btn-outline-secondary btn-sm">Volver</a>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div id="estado" class="alert alert-info">Cargando...</div>
+
+        <div class="table-responsive d-none" id="tablaWrap">
+          <table class="table table-striped align-middle">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Mensaje</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const estado = document.getElementById('estado');
+    const tablaWrap = document.getElementById('tablaWrap');
+    const tbody = document.getElementById('tbody');
+
+    async function cargar() {
+      try {
+        const res = await fetch('/registros.json', {
+          headers: { 'Accept': 'application/json' }
+        });
+
+        const data = await res.json();
+        const registros = Array.isArray(data.registros) ? data.registros : [];
+
+        if (registros.length === 0) {
+          estado.className = 'alert alert-warning';
+          estado.innerText = 'No hay registros aún.';
+          tablaWrap.classList.add('d-none');
+          return;
+        }
+
+        tbody.innerHTML = registros.map(r => `
+          <tr>
+            <td style="white-space:nowrap;">${(r.fecha ?? '-')}</td>
+            <td>${(r.nombre ?? '-')}</td>
+            <td>${(r.email ?? '-')}</td>
+            <td style="min-width:320px;">${(r.mensaje ?? '-')}</td>
+          </tr>
+        `).join('');
+
+        estado.classList.add('d-none');
+        tablaWrap.classList.remove('d-none');
+      } catch (e) {
+        estado.className = 'alert alert-danger';
+        estado.innerText = 'Error al cargar registros.';
+      }
+    }
+
+    cargar();
+  </script>
+</body>
+</html>
