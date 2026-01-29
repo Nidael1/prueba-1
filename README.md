@@ -60,6 +60,15 @@ cd prueba-1
 composer install
 cp .env.example .env
 php artisan key:generate
+en el .env se llenan los datos con el gestor que tenga en mi ejemplo es
+
+DB_CONNECTION=efectivale
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=root
+php artisan migrate
 php artisan serve
 http://localhost:8000/index.html
 
