@@ -68,8 +68,10 @@ DB_PORT=3306
 DB_DATABASE=laravel
 DB_USERNAME=root
 DB_PASSWORD=root
+
 php artisan migrate
 php artisan serve
+
 http://localhost:8000/index.html
 
 
